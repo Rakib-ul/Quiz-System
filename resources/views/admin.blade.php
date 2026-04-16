@@ -8,16 +8,7 @@
 </head>
 <body class="bg-gray-100">
 
-    <!-- 🔷 Navbar -->
-    <nav class="bg-indigo-600 text-white px-6 py-4 flex justify-between items-center shadow-md">
-        <div class="text-2xl font-bold">Quiz System</div>
-        <div class="space-x-6">
-            <a href="#" class="hover:text-gray-200">Categories</a>
-            <a href="#" class="hover:text-gray-200">Quiz</a>
-            <span class="font-semibold">Welcome, {{$name}}</span>
-            <a href="#" class="bg-red-500 px-3 py-1 rounded hover:bg-red-600">Logout</a>
-        </div>
-    </nav>
+    <x-navbar name={{$name}}> </x-navbar>
 
     <!-- 🔶 Dashboard Content -->
     <div class="p-6">
@@ -32,7 +23,7 @@
             <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
                 <h2 class="text-xl font-semibold text-gray-700 mb-2">Categories</h2>
                 <p class="text-gray-500 mb-4">Manage quiz categories</p>
-                <a href="#" class="text-indigo-600 font-medium hover:underline">View Categories →</a>
+                <a href="/admin-categories" class="text-indigo-600 font-medium hover:underline">View Categories →</a>
             </div>
 
             <!-- Quiz Card -->

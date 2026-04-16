@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\Category;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -45,5 +46,33 @@ class AdminController extends Controller
             return redirect('admin-login');
         }
         
+    }
+
+    function categories(){
+        $admin = Session::get('admin');
+        if($admin){
+            return view('categories',["name" => $admin['name']]);
+        }
+        else{
+            return redirect('admin-login');
+        }
+    }
+
+    function logout(){
+        Session::forget('admin');
+        return redirect('admin-login');
+    }
+
+    function addCategory(Request $request){
+
+        $admin = Session::get('admin');
+        $category = new Category();
+        $category->name = $request->category;
+        $category->creator = $admin['name'];
+        if($category->save()){
+            Session::flash('category', "Success: Category ". $request->category . " Added");
+        }
+        return redirect('admin-categories');
+
     }
 }
