@@ -41,84 +41,104 @@ class AdminController extends Controller
         return redirect('dashboard');
     }
 
-    function dashboard(){
+    function dashboard()
+    {
         $admin = Session::get('admin');
-        if($admin){
-            return view('admin',["name" => $admin['name']]);
-        }
-        else{
+        if ($admin) {
+            return view('admin', ["name" => $admin['name']]);
+        } else {
             return redirect('admin-login');
         }
-        
+
     }
 
-    function categories(){
-        $category = Category::get(); 
-        
+    function categories()
+    {
+        $category = Category::get();
+
         $admin = Session::get('admin');
-        if($admin){
-            return view('categories',["name" => $admin['name'], "categories" => $category]);
-        }
-        else{
+        if ($admin) {
+            return view('categories', ["name" => $admin['name'], "categories" => $category]);
+        } else {
             return redirect('admin-login');
         }
     }
 
-    function logout(){
+    function logout()
+    {
         Session::forget('admin');
         return redirect('admin-login');
     }
 
-    function addCategory(Request $request){
+    function addCategory(Request $request)
+    {
 
         $validation = $request->validate([
-            "category" =>"required | min:3 | unique:categories,name"
+            "category" => "required | min:3 | unique:categories,name"
         ]);
 
         $admin = Session::get('admin');
         $category = new Category();
         $category->name = $request->category;
         $category->creator = $admin['name'];
-        if($category->save()){
-            Session::flash('category', "Success: Category ". $request->category . " Added");
+        if ($category->save()) {
+            Session::flash('category', "Success: Category " . $request->category . " Added");
         }
         return redirect('admin-categories');
 
     }
 
-    function deleteCategory($id){
+    function deleteCategory($id)
+    {
         $isDeleted = Category::find($id)->delete();
         Session::flash('category', "Success: Category " . " Deleted");
 
-       return redirect('admin-categories');
+        return redirect('admin-categories');
 
     }
 
-    function addQuiz(){
-        
+    function addQuiz()
+    {
+
         $admin = Session::get('admin');
         $category = Category::get();
-        if($admin){
+        $totalMcq = 0;
+        if ($admin) {
             $quizName = request('quiz');
             $categoryId = request('category_id');
 
-            if($quizName && $categoryId && !Session::has('quizDetails')){
+            if ($quizName && $categoryId && !Session::has('quizDetails')) {
                 $quiz = new Quiz();
                 $quiz->name = $quizName;
                 $quiz->category_id = $categoryId;
-                if($quiz->save()){
+                if ($quiz->save()) {
                     Session::put('quizDetails', $quiz);
                 }
+            } else {
+                $quiz = Session::get('quizDetails');
+                if ($quiz) {
+                    $totalMcq = MCQ::where('quiz_id', $quiz['id'])->count();
+                } else {
+                    $totalMcq = 0;
+                }
             }
-            return view('add-quiz',["name" => $admin['name'], "categories" => $category]);
-        }
-        else{
+            return view('add-quiz', ["name" => $admin['name'], "categories" => $category, "totalMcqs" => $totalMcq]);
+        } else {
             return redirect('admin-login');
         }
     }
 
-    function addMCQs(Request $request){
-        
+    function addMCQs(Request $request)
+    {
+        $request->validate([
+            "question" => "required|min:5",
+            "a" => "required",
+            "b" => "required",
+            "c" => "required",
+            "d" => "required",
+            "correct_ans" => "required",
+
+        ]);
         $mcq = new MCQ();
         $quiz = Session::get('quizDetails');
         $admin = Session::get('admin');
@@ -133,19 +153,42 @@ class AdminController extends Controller
         $mcq->quiz_id = $quiz['id'];
         $mcq->category_id = $quiz['category_id'];
 
-        if($mcq->save()){
-            if($request->submit == "add_more"){
+        if ($mcq->save()) {
+            if ($request->submit == "add_more") {
                 return redirect(url()->previous());
-            }
-            else{
+            } else {
                 Session::forget('quizDetails');
                 return redirect("/dashboard");
             }
         }
+    }
 
+    function endQuiz()
+    {
+        Session::forget('quizDetails');
+        return redirect('/dashboard');
+    }
 
+    function showQuiz($id)
+    {
+        $admin = Session::get('admin');
+        $mcqs = MCQ::where('quiz_id', $id)->get();
+        if ($admin) {
+            return view('showQuiz', ["name" => $admin['name'], "mcqs" => $mcqs]);
+        } else {
+            return redirect('admin-login');
+        }
 
-         
+    }
+
+    function quizList($id, $category){
+        $admin = Session::get('admin');
+         $quizData = Quiz::where('category_id', $id)->get();
+        if ($admin) {
+            return view('quiz-list', ["name" => $admin['name'], "quizData" => $quizData, "category" => $category]);
+        } else {
+            return redirect('admin-login');
+        }
     }
 
 }
