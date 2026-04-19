@@ -13,7 +13,7 @@
         <div class="space-x-6">
             <a href="/dashboard" class="hover:text-gray-200">Dashboard</a>
             <a href="/admin-categories" class="hover:text-gray-200">Categories</a>
-            <a href="#" class="hover:text-gray-200">Quiz</a>
+            <a href="/add-quiz" class="hover:text-gray-200">Quiz</a>
             <span class="font-semibold">Welcome, {{$name}}</span>
             <a href="/admin-logout" class="bg-red-500 px-3 py-1 rounded hover:bg-red-600">Logout</a>
         </div>
