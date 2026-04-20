@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController;
 
 Route::get('/',[UserController::class, 'welcome']);
 Route::get('user-quiz-list/{id}/{category}',[UserController::class, 'userQuizList']);
+Route::view('user-signup', 'userSignup');
+Route::post('user-signup', [UserController::class, 'userSignup']);
 
 Route::view('admin-login', 'admin-login');
 
