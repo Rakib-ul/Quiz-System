@@ -41,6 +41,9 @@
                             <th scope="col" class="px-6 py-4 font-semibold text-gray-500 uppercase tracking-wider text-xs w-2/3">
                                 Quiz Name
                             </th>
+                            <th scope="col" class="px-6 py-4 font-semibold text-gray-500 uppercase tracking-wider text-xs w-2/3">
+                                MCQ Count 
+                            </th>
                             <th scope="col" class="px-6 py-4 font-semibold text-gray-500 uppercase tracking-wider text-xs text-right">
                                 Actions
                             </th>
@@ -52,14 +55,17 @@
                             <tr class="hover:bg-gray-50/80 transition-colors duration-200 group">
                                 
                                 <td class="px-6 py-4 whitespace-nowrap text-gray-500 font-medium">
-                                    #{{ $item->id }}
+                                    {{ $item->id }}
                                 </td>
                                 
                                 <td class="px-6 py-4 text-gray-900 font-medium">
                                     {{ $item->name }}
                                 </td>
                                 <td class="px-6 py-4 text-gray-900 font-medium">
-                                    <a href="" class="text-green-700 font-bold" >Attempt Quiz</a>
+                                    {{ $item->mcq_count }}
+                                </td>
+                                <td class="px-6 py-4 text-gray-900 font-medium">
+                                    <a href="/start-quiz/{{$item->id}}/{{$item->name}}" class="text-green-700 font-bold" >Attempt Quiz</a>
                                 
                                 </td>
                                 

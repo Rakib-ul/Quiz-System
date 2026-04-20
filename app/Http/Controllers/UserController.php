@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 
 use App\Models\Category;
 use App\Models\Quiz;
+use App\Models\MCQ;
 class UserController extends Controller
 {
     function welcome()
@@ -19,7 +20,7 @@ class UserController extends Controller
     function userQuizList($id, $category)
     {
 
-        $quizData = Quiz::where('category_id', $id)->get();
+        $quizData = Quiz::withCount('mcq')->where('category_id', $id)->get();
         //return $quizData;
 
         return view('user-quiz-list', ["quizData" => $quizData, "category" => $category]);
@@ -34,6 +35,16 @@ class UserController extends Controller
             'password' => 'required | min:4 | confirmed',
         ]);
         return $request;
+
+    }
+
+    function startQuiz($id, $name){
+
+
+        $quizCount = MCQ::where('quiz_id', $id)->count();
+        $quizName = $name; 
+
+        return view('start-quiz', ['quizName' => $quizName, 'quizCount' => $quizCount]);
 
     }
 }
