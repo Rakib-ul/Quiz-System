@@ -16,14 +16,14 @@
             
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">
-                    Create an account
+                    Login To your Account 
                 </h2>
                 <p class="text-sm text-gray-500 mt-2">
                     Join us to start taking quizzes and tracking your skills.
                 </p>
             </div>
 
-            <form action="/user-signup" method="post" class="space-y-5">
+            <form action="/user-login" method="post" class="space-y-5">
                 @csrf
 
                 @error('user')
@@ -35,21 +35,6 @@
                     </div>
                 @enderror
 
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                    <input 
-                        type="text" 
-                        id="name"
-                        name="name"
-                        placeholder="Enter your Name"
-                        value="{{ old('name') }}"
-                        class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-colors sm:text-sm @error('name') border-red-300 focus:ring-red-500 focus:border-red-500 @enderror"
-                        
-                    >
-                    @error('name')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
 
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
@@ -82,34 +67,21 @@
                     @enderror
                 </div>
 
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
-                    <input 
-                        type="password" 
-                        id="password"
-                        name="password_confirmation"
-                        placeholder=""
-                        class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-colors sm:text-sm @error('password') border-red-300 focus:ring-red-500 focus:border-red-500 @enderror"
-                        
-                    >
-                    @error('password')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
+                
 
                 <button 
                     type="submit"
                     class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors mt-2"
                 >
-                    Sign Up
+                    Login
                 </button>
 
             </form>
 
             <div class="mt-6 text-center text-sm text-gray-600">
-                Already have an account? 
-                <a href="/login" class="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">
-                    Sign in here
+                Don't have an account? 
+                <a href="/user-signup" class="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">
+                    Sign up here
                 </a>
             </div>
 
