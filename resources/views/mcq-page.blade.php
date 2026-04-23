@@ -31,21 +31,21 @@
             <h3 class="text-green-900 font-bold text-xl mb-1">Q {{ session('currentQuiz')['currentMcq'] }}: {{ $mcqData->question }}</h3>
             <form action="/submit-next/{{ $mcqData['id'] }}" method="post">
                 @csrf
-
+                <input type="hidden" name = "id" value="{{ $mcqData['id'] }}">
                 <label for="option_1" class="flex border p-3 mt-2 rounded-2xl hover:bg-blue-50" >
-                    <input name="option" id="option_1" class=" text-blue-500" type="radio">
+                    <input name="option" value="a"  id="option_1" class=" text-blue-500" type="radio">
                     <span class="text-green-900 pl-2" >{{ $mcqData->a }}</span>
                 </label>
                 <label for="option_2" class="flex border p-3 mt-2 rounded-2xl hover:bg-blue-50" >
-                    <input name="option" id="option_2" class=" text-blue-500" type="radio">
+                    <input name="option" value="b" id="option_2" class=" text-blue-500" type="radio">
                     <span class="text-green-900 pl-2" >{{ $mcqData->b }}</span>
                 </label>
                 <label for="option_3" class="flex border p-3 mt-2 rounded-2xl hover:bg-blue-50" >
-                    <input name="option" id="option_3" class=" text-blue-500" type="radio">
+                    <input name="option" value="c"  id="option_3" class=" text-blue-500" type="radio">
                     <span class="text-green-900 pl-2" >{{ $mcqData->c }}</span>
                 </label>
-                <label for="option_4" class="flex border p-3 mt-2 rounded-2xl hover:bg-blue-50" >
-                    <input name="option" id="option_4" class=" text-blue-500" type="radio">
+                <label for="option_4"  class="flex border p-3 mt-2 rounded-2xl hover:bg-blue-50" >
+                    <input name="option" value="d"  id="option_4" class=" text-blue-500" type="radio">
                     <span class="text-green-900 pl-2" >{{ $mcqData->d }}</span>
                 </label>
 
