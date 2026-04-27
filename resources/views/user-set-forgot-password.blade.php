@@ -16,14 +16,12 @@
             
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">
-                    Login To your Account 
+                    User Set Password
                 </h2>
-                <p class="text-sm text-gray-500 mt-2">
-                    Join us to start taking quizzes and tracking your skills.
-                </p>
+                
             </div>
 
-            <form action="/user-login" method="post" class="space-y-5">
+            <form action="/verify-set-forgot-password" method="post" class="space-y-5">
                 @csrf
 
                 @error('user')
@@ -35,15 +33,15 @@
                     </div>
                 @enderror
 
+                
 
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    
                     <input 
-                        type="email" 
+                        type="hidden" 
                         id="email"
                         name="email"
-                        placeholder="Enter your Email"
-                        value="{{ old('email') }}"
+                        value="{{ $email }}"
                         class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-colors sm:text-sm @error('email') border-red-300 focus:ring-red-500 focus:border-red-500 @enderror"
                         
                     >
@@ -67,28 +65,31 @@
                     @enderror
                 </div>
 
-                
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                    <input 
+                        type="password" 
+                        id="password"
+                        name="password_confirmation"
+                        placeholder=""
+                        class="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-colors sm:text-sm @error('password') border-red-300 focus:ring-red-500 focus:border-red-500 @enderror"
+                        
+                    >
+                    @error('password')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
 
                 <button 
                     type="submit"
                     class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors mt-2"
                 >
-                    Login
+                    Reset Password
                 </button>
 
             </form>
 
-            <div class="mt-6 text-center text-sm text-gray-600">
-                Don't have an account? 
-                <a href="/user-signup" class="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">
-                    Sign up here
-                </a>
-            </div>
-            <div class="mt-6 text-center text-sm text-gray-600"> 
-                <a href="/user-forgot-password" class="font-semibold text-green-600 hover:text-green-400 transition-colors">
-                    Forget Password? 
-                </a>
-            </div>
+            
 
         </div>
     </main>

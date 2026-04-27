@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Models\Record;
 use App\Models\MCQ_Record;
 use App\Mail\VerifyUser;
+use App\Mail\UserForgetPassword;
 
 class UserController extends Controller
 {
@@ -250,4 +251,39 @@ class UserController extends Controller
         $quizData = Quiz::withCount('mcq')->where('name', 'Like', '%'.$request->search .'%')->get();
         return view('quiz-search',['quizData' => $quizData, 'quiz' => $request->search]);
     }
+
+    function userForgotPassword(Request $request){
+        $link = Crypt::encryptString($request->email);
+        $link = url('/verify-forgot-password/'.$link);
+        Mail::to($request->email)->send(new UserForgetPassword($link));
+        return redirect('/');
+        
+    }
+
+    function userResetForgotPassword($eamil){
+        $orgEmail = Crypt::decryptString($eamil);
+        return view('user-set-forgot-password', ['email' => $orgEmail]);
+    }
+
+    function userSetForgotPassword(Request $request){
+        
+        $validate = $request->validate([
+            'email' => 'required | email',
+            'password' => 'required | min:4 | confirmed',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        if($user){
+            $user->password = Hash::make($request->password);
+            if($user->save()){
+                return redirect('user-login');
+            }
+            
+        }
+        
+
+
+    }
+
+
 }

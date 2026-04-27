@@ -18,6 +18,10 @@ Route::get('user-login-quiz', [UserController::class, 'userLoginQuiz']);
 Route::get('search-quiz', [UserController::class, 'searchQuiz']);
 
 Route::get('verify-user/{email}', [UserController::class, 'verifyUser']);
+Route::get('verify-forgot-password/{email}', [UserController::class, 'userResetForgotPassword']);
+Route::view('user-forgot-password', 'user-forgot-password');
+Route::post('user-forgot-password', [UserController::class, 'userForgotPassword']);
+Route::post('verify-set-forgot-password', [UserController::class, 'userSetForgotPassword']);
 
 Route::view('user-login', 'user-login');
 Route::post('user-login', [UserController::class, 'userLogin']);
